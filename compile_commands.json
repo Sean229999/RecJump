@@ -1,0 +1,56 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/x86_64-w64-mingw32-g++",
+      "-I./include",
+      "-I/mnt/c/raylib/w64devkit/include",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-c",
+      "-o",
+      "build/main.o",
+      "src/main.cpp"
+    ],
+    "directory": "/mnt/e/gameDev/RecJump",
+    "file": "/mnt/e/gameDev/RecJump/src/main.cpp",
+    "output": "/mnt/e/gameDev/RecJump/build/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-w64-mingw32-g++",
+      "-I./include",
+      "-I/mnt/c/raylib/w64devkit/include",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-c",
+      "-o",
+      "build/platform.o",
+      "src/platform.cpp"
+    ],
+    "directory": "/mnt/e/gameDev/RecJump",
+    "file": "/mnt/e/gameDev/RecJump/src/platform.cpp",
+    "output": "/mnt/e/gameDev/RecJump/build/platform.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-w64-mingw32-g++",
+      "-I./include",
+      "-I/mnt/c/raylib/w64devkit/include",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-g",
+      "-c",
+      "-o",
+      "build/player.o",
+      "src/player.cpp"
+    ],
+    "directory": "/mnt/e/gameDev/RecJump",
+    "file": "/mnt/e/gameDev/RecJump/src/player.cpp",
+    "output": "/mnt/e/gameDev/RecJump/build/player.o"
+  }
+]
