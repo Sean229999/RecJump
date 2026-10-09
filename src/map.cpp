@@ -5,6 +5,9 @@
 
 using json = nlohmann::json;
 
+Map::Map(){}
+
+
 void Map::Load(const std::string&path){
     std::ifstream file(path);
     if(!file.is_open()){
@@ -112,3 +115,5 @@ void Map::Draw(){
         DrawRectangleRec(cp.area,YELLOW);
     }
 }
+
+Map::~Map(){}

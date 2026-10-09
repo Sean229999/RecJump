@@ -16,10 +16,14 @@ class Map{
         std::vector<Spike> Sp; 
     
         std::vector<CheckPoint> checkpoints;
+        
+        Map();
 
         void Load(const std::string &path);
         void transRecToSpike();
         void DrawSpike(const Spike&sp);
         void Draw();
+
+        ~Map();
 };
 

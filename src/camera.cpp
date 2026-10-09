@@ -27,5 +27,6 @@ void playerCamera::updateCamera(Player &player){
 void playerCamera::End(){
     EndMode2D();
 }
+
 playerCamera::~playerCamera(){}
 

@@ -2,6 +2,8 @@
 #include "nlohmann/json.hpp"
 #include <fstream>
 
+SaveSystem::SaveSystem(){}
+
 using json = nlohmann::json;
 
 bool SaveSystem::Save(const SaveData& data){
@@ -41,3 +43,5 @@ bool SaveSystem::Load(SaveData&data){
     }
 
 }
+
+SaveSystem::~SaveSystem(){}
