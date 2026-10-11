@@ -9,7 +9,7 @@ void Game::Init(){
     //init window
     InitWindow(GAME_WIDTH,GAME_HEIGHT,"RecJump");     
     //set Fps
-    SetTargetFPS(60);
+    SetTargetFPS(180);
     // create canvas
     target = LoadRenderTexture(GAME_WIDTH,GAME_HEIGHT);
 

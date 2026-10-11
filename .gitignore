@@ -7,4 +7,6 @@ build/
 
 .cache/
 
+save.json
+
 
