@@ -56,11 +56,28 @@ void Map::Load(const std::string&path){
                         obj["y"].get<float>(),
                     },
                     
-                    false
+                    false,
+                    YELLOW
                 });
                 id++;
             }
         }
+        else if(layer["name"] == "Spawn"){
+            for(auto &obj : layer["objects"]){
+                this->spawn.x = obj["x"].get<float>();
+                this->spawn.y = obj["y"].get<float>();
+            }
+        }
+        else if(layer["name"] == "ExitArea"){
+            for(auto &obj : layer["objects"]){
+                this->Exit.x = obj["x"].get<float>();
+                this->Exit.y = obj["y"].get<float>();
+                this->Exit.height = obj["height"].get<float>();
+                this->Exit.width = obj["width"].get<float>();
+            }
+        }
+
+
     }
 }
 
@@ -112,8 +129,18 @@ void Map::Draw(){
         DrawSpike(sp);
     }
     for(auto &cp : checkpoints){
-        DrawRectangleRec(cp.area,YELLOW);
+        if(cp.activated)cp.checkColor = GREEN;
+        DrawRectangleRec(cp.area,cp.checkColor);
     }
+    DrawRectangleRec(Exit,RED);
+}
+
+void Map::Clear(){
+    platforms.clear();
+    Sp.clear();
+    checkpoints.clear();
+    spawn = {0,0};
+
 }
 
 Map::~Map(){}

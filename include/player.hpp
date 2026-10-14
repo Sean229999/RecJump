@@ -12,6 +12,7 @@ struct CheckPoint{
     Rectangle area;
     Vector2 respwanPos;
     bool activated = false;
+    Color checkColor;
 };
 
 enum class PlayerState {

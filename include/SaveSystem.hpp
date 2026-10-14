@@ -2,6 +2,7 @@
 
 struct SaveData{
     int checkPointId;
+    int currentLevelId;
 };
 
 class SaveSystem{

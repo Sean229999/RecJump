@@ -236,30 +236,6 @@
          "name":"Spike",
          "objects":[
                 {
-                 "height":96,
-                 "id":20,
-                 "name":"",
-                 "opacity":1,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":544,
-                 "y":704
-                }, 
-                {
-                 "height":96,
-                 "id":21,
-                 "name":"",
-                 "opacity":1,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":64,
-                 "x":704,
-                 "y":704
-                }, 
-                {
                  "height":160,
                  "id":43,
                  "name":"",
@@ -399,6 +375,29 @@
         }, 
         {
          "draworder":"topdown",
+         "id":7,
+         "name":"ExitArea",
+         "objects":[
+                {
+                 "height":64,
+                 "id":59,
+                 "name":"",
+                 "opacity":1,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":96,
+                 "x":8448,
+                 "y":832
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":5,
          "name":"CheckPoint",
          "objects":[
@@ -431,9 +430,32 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":6,
+         "name":"Spawn",
+         "objects":[
+                {
+                 "height":32,
+                 "id":58,
+                 "name":"",
+                 "opacity":1,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":224,
+                 "y":736
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":58,
+ "nextlayerid":8,
+ "nextobjectid":60,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.12.2",

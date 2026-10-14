@@ -73,7 +73,7 @@ void Player::HCollision(float dx,std::vector<Platform>&plats){
 }
 
 void Player::DrawPlayer(){
-    DrawRectangleRec(REC,BLUE);
+    DrawRectangleRec(REC,pcolor);
 }
 
 
@@ -190,16 +190,7 @@ void Player::Update(std::vector<Platform> &plats,std::vector<Spike>&Sp,Camera2D 
     }
     
     
-    for(auto &cp:checkpoints){
-        if(CheckCollisionRecs(REC,cp.area)){
-            cp.activated = true;
-            if(current_checkPoint < cp.id) {
-                current_checkPoint = cp.id;
-            }
-            save.Save({current_checkPoint});
-        }
-    }
-    
+   
      
 }
 Player::~Player(){}

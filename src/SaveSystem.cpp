@@ -10,7 +10,7 @@ bool SaveSystem::Save(const SaveData& data){
     json j;
 
     j["checkPointId"] = data.checkPointId;
-    
+    j["currentLevelId"] = data.currentLevelId; 
     std::ofstream file("save.json");
 
     if(!file.is_open()){
@@ -35,6 +35,7 @@ bool SaveSystem::Load(SaveData&data){
             json j;
             file >> j;
             data.checkPointId = j.value("checkPointId",0);
+            data.currentLevelId = j.value("currentLevelId",0);
             return true;
         }
         catch(...){

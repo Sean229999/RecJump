@@ -29,8 +29,15 @@ class Game{
         RenderTexture2D target;
         std::vector<Platform>Plat_Land;
         std::vector<Spike>Spikess;
+
         int current_checkPoint;
-        
+        int current_Level;        
+        std::vector<std::string>levels = {
+            "assets/maps/level1.tmj",
+            "assets/maps/level2.tmj",
+            "assets/maps/level3.tmj",
+        };
+
 
     public:
         Game();
@@ -41,6 +48,10 @@ class Game{
         void LoadSave();
         void Init();
     
+        void LoadLevel(int level);
+        void nextLevel();
+        void SaveId();
+
         void Update();
 
         void Draw();
