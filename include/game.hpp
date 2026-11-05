@@ -11,9 +11,9 @@
 #define playerColor BLUE
 #define platColor RED
 #define landColor BLACK
-#define SIZE 50.0
-#define G 1200.0
-
+#define SIZE 32.0
+#define G 2000.0
+#define SPEED 1000
 class Game{
     
     private:
@@ -29,13 +29,15 @@ class Game{
         RenderTexture2D target;
         std::vector<Platform>Plat_Land;
         std::vector<Spike>Spikess;
-
+        std::vector<Spike>orignalSpikes;
+        std::vector<bool>activatedTrap;
         int current_checkPoint;
         int current_Level;        
         std::vector<std::string>levels = {
             "assets/maps/level1.tmj",
             "assets/maps/level2.tmj",
             "assets/maps/level3.tmj",
+            "assets/maps/level4.tmj",
         };
 
 
@@ -58,6 +60,9 @@ class Game{
 
         void DrawGameWorld();
         void DrawGameScreen();
+        
+        void triggerTrap();
 
+        void resetTrap();
 };
 

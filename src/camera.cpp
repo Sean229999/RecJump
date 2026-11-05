@@ -1,13 +1,16 @@
 #include "camera.hpp"
 
+
 playerCamera::playerCamera(Player &player,float width,float height){
     camera.target = {player.REC.x + 25,player.REC.y + 25};
     camera.offset = {width * 0.5f,height * 0.5f};
     camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
+    camera.zoom = 0.75f;
 
     rightLimit = width * 0.5f;
     leftLimit = width * 0.3f;
+    
+
 }
 
 void playerCamera::Begin(){

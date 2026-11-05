@@ -31,6 +31,7 @@ void Map::Load(const std::string&path){
             }
         }
         else if(layer["name"] == "Spike"){
+            int idx = 0;
             for(auto &obj : layer["objects"]){
                 spikes.push_back({
                     obj["x"].get<float>(),
@@ -38,6 +39,20 @@ void Map::Load(const std::string&path){
                     obj["width"].get<float>(),
                     obj["height"].get<float>()
                 });
+
+                //find traps by opacity
+                if(obj["opacity"].get<float>()*100 == 99){  
+                    //traps.push_back({idx,-1});
+                    int limit = 0;
+                    for(auto &prop : obj["properties"]){
+                        if(prop["name"] == "limit"){
+                            limit = prop["value"].get<int>();
+                            break;
+                        }
+                    }
+                    traps.push_back({idx,limit});
+                }
+                idx++;
             }
         }
         else if(layer["name"] == "CheckPoint"){
@@ -98,8 +113,22 @@ void Map::transRecToSpike(){
         Sp.push_back(sp);
     }
 }
+/*
+void Map::transRecToSpikeOne(){    
 
+        Spike sp;
+        auto [x,y,w,h] = rec;
+        sp.bound = { x, y, w, h };
 
+        sp.hitbox = {
+            x + w * 0.15f,
+            y + h * 0.15f,
+            w * 0.7f,
+            h * 0.85f
+        };
+       
+}
+*/
 void Map::DrawSpike(const Spike&sp){
     const Rectangle &rec = sp.bound;
     
@@ -122,11 +151,12 @@ void Map::DrawSpike(const Spike&sp){
 }
 
 void Map::Draw(){
-    for(int i = 0;i<(int)platforms.size();i++){
-        DrawRectangleRec(platforms[i],GRAY);
-    }
+
     for(auto &sp : Sp){
         DrawSpike(sp);
+    }
+    for(int i = 0;i<(int)platforms.size();i++){
+        DrawRectangleRec(platforms[i],GRAY);
     }
     for(auto &cp : checkpoints){
         if(cp.activated)cp.checkColor = GREEN;
@@ -138,9 +168,11 @@ void Map::Draw(){
 void Map::Clear(){
     platforms.clear();
     Sp.clear();
+    spikes.clear();
     checkpoints.clear();
     spawn = {0,0};
-
+    traps.clear();     
 }
+
 
 Map::~Map(){}

@@ -34,7 +34,8 @@ public:
     float gravity;
     float dt;
     bool onGround = false;
-    
+    int jumpCount;
+
     SaveSystem save;
     float deathTimer = 0.0f;
     float deathDuration = 1.0f;
@@ -48,7 +49,7 @@ public:
     void VCollision(float oldTop,float nowTop,float oldBottom,float nowBottom,std::vector<Platform>&plats);
     void HCollision(float dx,std::vector<Platform>&plats);
     void Reset(std::vector<CheckPoint>&checkpoints,int &current_checkPoint);
-    void UpdateDeadFall(std::vector<CheckPoint>&checkpoints,int &current_checkPoint);
+    void UpdateDeadFall();
     void Die(PlayerState state);
 
     ~Player();

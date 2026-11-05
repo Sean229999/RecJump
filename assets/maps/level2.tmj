@@ -69,7 +69,7 @@
          "name":"Platform",
          "objects":[
                 {
-                 "height":192,
+                 "height":384,
                  "id":1,
                  "name":"",
                  "opacity":1,
@@ -81,19 +81,7 @@
                  "y":928
                 }, 
                 {
-                 "height":128,
-                 "id":2,
-                 "name":"",
-                 "opacity":1,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":352,
-                 "x":640,
-                 "y":960
-                }, 
-                {
-                 "height":160,
+                 "height":384,
                  "id":5,
                  "name":"",
                  "opacity":1,
@@ -101,8 +89,68 @@
                  "type":"",
                  "visible":true,
                  "width":384,
-                 "x":1088,
+                 "x":640,
                  "y":928
+                }, 
+                {
+                 "height":32,
+                 "id":17,
+                 "name":"",
+                 "opacity":1,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":224,
+                 "x":1088,
+                 "y":768
+                }, 
+                {
+                 "height":32,
+                 "id":19,
+                 "name":"",
+                 "opacity":1,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":224,
+                 "x":1344,
+                 "y":608
+                }, 
+                {
+                 "height":32,
+                 "id":20,
+                 "name":"",
+                 "opacity":1,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":224,
+                 "x":1696,
+                 "y":480
+                }, 
+                {
+                 "height":32,
+                 "id":21,
+                 "name":"",
+                 "opacity":1,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":224,
+                 "x":2080,
+                 "y":352
+                }, 
+                {
+                 "height":32,
+                 "id":22,
+                 "name":"",
+                 "opacity":1,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":256,
+                 "x":2560,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -116,28 +164,45 @@
          "name":"Spike",
          "objects":[
                 {
-                 "height":96,
-                 "id":11,
-                 "name":"",
-                 "opacity":1,
+                 "height":288,
+                 "id":24,
+                 "name":"Trap",
+                 "opacity":0.99,
+                 "properties":[
+                        {
+                         "name":"limit",
+                         "type":"int",
+                         "value":672
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":32,
-                 "x":704,
-                 "y":864
-                }, 
+                 "width":64,
+                 "x":640,
+                 "y":928
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":6,
+         "name":"ExitArea",
+         "objects":[
                 {
-                 "height":96,
-                 "id":12,
+                 "height":64,
+                 "id":23,
                  "name":"",
                  "opacity":1,
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":32,
-                 "x":832,
-                 "y":864
+                 "width":64,
+                 "x":2752,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -149,19 +214,7 @@
          "draworder":"topdown",
          "id":5,
          "name":"CheckPoint",
-         "objects":[
-                {
-                 "height":64,
-                 "id":9,
-                 "name":"",
-                 "opacity":1,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":96,
-                 "x":1120,
-                 "y":832
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -174,16 +227,16 @@
          "name":"Spawn",
          "objects":[
                 {
-                 "height":64,
+                 "height":32,
                  "id":8,
                  "name":"",
                  "opacity":1,
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":64,
+                 "width":32,
                  "x":192,
-                 "y":832
+                 "y":704
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -191,8 +244,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":14,
+ "nextlayerid":7,
+ "nextobjectid":25,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.12.2",

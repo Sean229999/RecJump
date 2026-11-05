@@ -1,6 +1,6 @@
 #include "player.hpp"
 
-Player::Player(Rectangle rec,float G,Color color):REC(rec),RESET(rec),pcolor(color),gravity(G){}
+Player::Player(Rectangle rec,float G,Color color):REC(rec),RESET(rec),pcolor(color),gravity(G),jumpCount(0){}
 
 void Player::VCollision(float oldTop,float nowTop,float oldBottom,float nowBottom,std::vector<Platform> &plats){
     float x = this->REC.x;
@@ -35,6 +35,7 @@ void Player::VCollision(float oldTop,float nowTop,float oldBottom,float nowBotto
                     this->REC.y = platTop - REC.height;
                     this->velocity_y = 0;
                     this->onGround = true;
+                    jumpCount = 0;
                     break;
                 }
 
@@ -87,6 +88,7 @@ void Player::Reset(std::vector<CheckPoint>&checkpoints,int &current_checkPoint){
         this->REC = this->RESET;
     }
     velocity_y = 0;
+    jumpCount = 0;
     onGround = false;
     deathTimer = 0.0f;
     state = PlayerState::Normal;
@@ -94,16 +96,15 @@ void Player::Reset(std::vector<CheckPoint>&checkpoints,int &current_checkPoint){
 
 
 // If dead due to fall
-void Player::UpdateDeadFall(std::vector<CheckPoint>&checkpoints,int &current_checkPoint){
+void Player::UpdateDeadFall(){
     
     deathTimer += dt;
     velocity_y += dt * gravity;
     REC.y += velocity_y * dt;
 
     if(deathTimer >= deathDuration){
-        Reset(checkpoints,current_checkPoint);        
+        this->state = PlayerState::Respwaning;
     }
-
 }
 
 
@@ -132,11 +133,11 @@ void Player::Update(std::vector<Platform> &plats,std::vector<Spike>&Sp,Camera2D 
 
     // check if dead of alive
     if(state == PlayerState::DeadFall){
-        UpdateDeadFall(checkpoints,current_checkPoint);
+        UpdateDeadFall();
         return;
     }
     else if(state == PlayerState::DeadSpike){
-        UpdateDeadFall(checkpoints,current_checkPoint);
+        UpdateDeadFall();
         return;
     }
     
@@ -156,8 +157,9 @@ void Player::Update(std::vector<Platform> &plats,std::vector<Spike>&Sp,Camera2D 
 
 
     // Jump !!! 
-    if((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && onGround){
+    if((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) && jumpCount < 2){
         velocity_y = jumpSpeed; 
+        jumpCount++;
         onGround = false;
     }
    
@@ -176,10 +178,13 @@ void Player::Update(std::vector<Platform> &plats,std::vector<Spike>&Sp,Camera2D 
     VCollision(oldTop,nowTop,oldBottom,nowBottom,plats);
    
     // If fall out the world
+    
     Vector2 screenPos = GetWorldToScreen2D({REC.x,REC.y},camera);
     if(screenPos.y >= 960){
         Die(PlayerState::DeadFall);
     }   
+
+    
     
     // If hit the spikes
     for(auto &sp : Sp){
@@ -188,10 +193,6 @@ void Player::Update(std::vector<Platform> &plats,std::vector<Spike>&Sp,Camera2D 
             break;
         }
     }
-    
-    
-   
-     
 }
 Player::~Player(){}
 

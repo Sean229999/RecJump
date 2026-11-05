@@ -1,9 +1,10 @@
 #include "game.hpp"
-
 Game::Game():player({0,600,SIZE,SIZE},G,playerColor),camera(player,GAME_WIDTH,GAME_HEIGHT),target(),current_checkPoint(-1),current_Level(0){Init();}
 
 
+// initialization
 void Game::Init(){
+
     // Make window resizable
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     //init window
@@ -12,6 +13,7 @@ void Game::Init(){
     SetTargetFPS(180);
     // create canvas
     target = LoadRenderTexture(GAME_WIDTH,GAME_HEIGHT);
+    ToggleFullscreen();
 
     LoadSave();
     LoadLevel(current_Level);
@@ -25,6 +27,8 @@ void Game::Init(){
     player.Reset(maps.checkpoints,current_checkPoint);
 }
 
+
+// running the game
 void Game::Run(){
     while(!WindowShouldClose()){
         Update();
@@ -32,6 +36,8 @@ void Game::Run(){
     }
 }
 
+
+// load data
 void Game::LoadSave(){
     if(save.Load(data)){
         current_checkPoint = data.checkPointId;
@@ -39,11 +45,16 @@ void Game::LoadSave(){
     }
 }
 
+
+// main update
 void Game::Update(){
+
+    //toggle full screen
     if(IsKeyPressed(KEY_F11)){
         ToggleFullscreen();
     }
 
+    //player update 
     player.Update(
         Plat_Land,
         Spikess,
@@ -51,10 +62,21 @@ void Game::Update(){
         maps.checkpoints,
         current_checkPoint
     );
-
+    triggerTrap();
+   
+    // reset the trap after the death animation done
+    if(player.state == PlayerState::Respwaning){
+        resetTrap();
+        player.Reset(maps.checkpoints,current_checkPoint);
+        player.state = PlayerState::Normal;
+    }
+    
+    // update the camera
     camera.updateCamera(player);
+    // save when hit the checkpoints
     SaveId();
-
+    
+    // next level
     if(CheckCollisionRecs(player.REC,maps.Exit)){
         nextLevel();
     }
@@ -122,7 +144,10 @@ void Game::LoadLevel(int level){
     if(level < 0 || level >= (int)levels.size())return;
 
     maps.Clear();
-
+    Spikess.clear();
+    orignalSpikes.clear();
+    activatedTrap.clear();
+    
     //Load Map 
     maps.Load(levels[level]);
     maps.transRecToSpike(); 
@@ -135,10 +160,11 @@ void Game::LoadLevel(int level){
     Plat_Land.clear();
     Platform plats(maps.platforms,GRAY);
     Plat_Land.push_back(plats);
-
     Spikess = maps.Sp;
-    
-
+    orignalSpikes = Spikess;
+    activatedTrap.assign(Spikess.size(),false);
+    resetTrap();
+     
 }
 
 void Game::nextLevel(){
@@ -182,9 +208,58 @@ void Game::SaveId(){
 }
 
 
+// Draw the game
 void Game::Draw(){
     DrawGameWorld();
     DrawGameScreen();
+}
+
+// active the trap
+void Game::triggerTrap(){
+
+    float dt = GetFrameTime();
+    float spd = SPEED * 4.0;
+      
+    for(int i = 0;i < (int)maps.traps.size();i++){
+        int idx = maps.traps[i].index;
+        float player_center_x = player.REC.x + SIZE;
+        auto &spike1 = maps.Sp[idx];
+        auto &spike2 = Spikess[idx];
+        int limit = maps.traps[i].limit;
+
+        if(player_center_x >= spike1.bound.x + spike1.bound.width/2){
+            activatedTrap[idx] = true;
+        }
+        if(activatedTrap[idx]){
+            if(spike1.bound.y > limit){
+                spike1.bound.y -= spd * dt;
+                spike1.hitbox.y -= spd * dt;
+
+                spike2.bound.y -= spd * dt;
+                spike2.hitbox.y -= spd * dt;
+            }
+            else {
+                spike1.bound.y = limit;
+                spike1.hitbox.y = limit;
+                
+                spike2.bound.y = limit;
+                spike2.hitbox.y = limit;
+            }
+        }
+    }
+    
+
+}
+
+// reset trap
+void Game::resetTrap(){
+    for(int i = 0;i<(int)maps.traps.size();i++){
+        int idx = maps.traps[i].index;
+        auto &spike1 = maps.Sp[idx];
+        auto &spike2 = Spikess[idx];
+        spike1 = spike2 = orignalSpikes[idx];
+        activatedTrap[idx] = false;
+    }
 }
 
 Game::~Game(){
