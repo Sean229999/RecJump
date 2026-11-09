@@ -397,9 +397,19 @@
                  "opacity":0.99,
                  "properties":[
                         {
+                         "name":"downY",
+                         "type":"int",
+                         "value":114514
+                        }, 
+                        {
                          "name":"limit",
                          "type":"int",
                          "value":-1000
+                        }, 
+                        {
+                         "name":"topY",
+                         "type":"int",
+                         "value":-999
                         }],
                  "rotation":0,
                  "type":"",
@@ -415,9 +425,19 @@
                  "opacity":0.99,
                  "properties":[
                         {
+                         "name":"downY",
+                         "type":"int",
+                         "value":114514
+                        }, 
+                        {
                          "name":"limit",
                          "type":"int",
                          "value":-1000
+                        }, 
+                        {
+                         "name":"topY",
+                         "type":"int",
+                         "value":-114514
                         }],
                  "rotation":0,
                  "type":"",
@@ -433,9 +453,19 @@
                  "opacity":0.99,
                  "properties":[
                         {
+                         "name":"downY",
+                         "type":"int",
+                         "value":114514
+                        }, 
+                        {
                          "name":"limit",
                          "type":"int",
                          "value":-1000
+                        }, 
+                        {
+                         "name":"topY",
+                         "type":"int",
+                         "value":-114514
                         }],
                  "rotation":0,
                  "type":"",
@@ -451,9 +481,19 @@
                  "opacity":0.99,
                  "properties":[
                         {
+                         "name":"downY",
+                         "type":"int",
+                         "value":114514
+                        }, 
+                        {
                          "name":"limit",
                          "type":"int",
                          "value":-1000
+                        }, 
+                        {
+                         "name":"topY",
+                         "type":"int",
+                         "value":-114514
                         }],
                  "rotation":0,
                  "type":"",
@@ -505,9 +545,19 @@
                  "opacity":0.99,
                  "properties":[
                         {
+                         "name":"downY",
+                         "type":"int",
+                         "value":114514
+                        }, 
+                        {
                          "name":"limit",
                          "type":"int",
                          "value":-1000
+                        }, 
+                        {
+                         "name":"topY",
+                         "type":"int",
+                         "value":-114514
                         }],
                  "rotation":0,
                  "type":"",
@@ -523,9 +573,19 @@
                  "opacity":0.99,
                  "properties":[
                         {
+                         "name":"downY",
+                         "type":"int",
+                         "value":114514
+                        }, 
+                        {
                          "name":"limit",
                          "type":"int",
                          "value":-1000
+                        }, 
+                        {
+                         "name":"topY",
+                         "type":"int",
+                         "value":-114514
                         }],
                  "rotation":0,
                  "type":"",
@@ -541,9 +601,19 @@
                  "opacity":0.99,
                  "properties":[
                         {
+                         "name":"downY",
+                         "type":"int",
+                         "value":114514
+                        }, 
+                        {
                          "name":"limit",
                          "type":"int",
                          "value":-1000
+                        }, 
+                        {
+                         "name":"topY",
+                         "type":"int",
+                         "value":-114514
                         }],
                  "rotation":0,
                  "type":"",

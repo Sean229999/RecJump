@@ -5,6 +5,7 @@
 
 struct Spike{
     Rectangle bound,hitbox;
+    int direction;
 };
 
 struct CheckPoint{
@@ -43,6 +44,9 @@ public:
 
 
     Player(Rectangle rec,float G,Color color); 
+    
+    bool jumpEvent;
+    bool deathEvent;
 
     void DrawPlayer();
     void Update(std::vector<Platform>&plats,std::vector<Spike>&Sp,Camera2D&camera,std::vector<CheckPoint>&checkpoints,int &current_checkPoint); 

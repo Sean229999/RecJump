@@ -325,7 +325,7 @@
                  "y":1024
                 }, 
                 {
-                 "height":320,
+                 "height":224,
                  "id":70,
                  "name":"Trap",
                  "opacity":0.99,
@@ -454,7 +454,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":74,
+ "nextobjectid":81,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.12.2",

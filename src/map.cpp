@@ -25,32 +25,82 @@ void Map::Load(const std::string&path){
                     obj["x"].get<float>(),
                     obj["y"].get<float>(),
                     obj["width"].get<float>(),
-                    obj["height"].get<float>()
-                
+                    obj["height"].get<float>() 
                 });
             }
         }
         else if(layer["name"] == "Spike"){
             int idx = 0;
             for(auto &obj : layer["objects"]){
-                spikes.push_back({
-                    obj["x"].get<float>(),
-                    obj["y"].get<float>(),
-                    obj["width"].get<float>(),
-                    obj["height"].get<float>()
-                });
+                float x = obj["x"].get<float>();
+                float y = obj["y"].get<float>();
+                float width = obj["width"].get<float>();
+                float height = obj["height"].get<float>();
+                int dir = 0;
+                for(auto &prop : obj["properties"]){
+                    if(prop["name"] == "direction"){
+                        dir = prop["value"].get<int>();
+                    }
+                }
+                auto sp = transRecToSpikeOne({x,y,width,height},dir);
+                spikes.push_back(sp);
+
 
                 //find traps by opacity
                 if(obj["opacity"].get<float>()*100 == 99){  
-                    //traps.push_back({idx,-1});
                     int limit = 0;
+                   
+                    float top_y,down_y,right_x,left_x;
+                    
+                    if(dir == 0){
+                        top_y = y - height * 2;
+                        down_y = y + height;
+                        left_x = x + width/2;
+                        right_x = x + width;
+                        limit = y - height * 3;
+                    }
+                    if(dir == 1){
+                        top_y = y;
+                        down_y = y + height;
+                        left_x = x;
+                        right_x = x + width * 2;
+                        limit = x + width * 3;
+                    }
+                    if(dir == 2){
+                        top_y = y;
+                        down_y = y + height;
+                        left_x = x - width * 2;
+                        right_x = x + width;
+                        limit = x - width * 3;
+                    }
+                    if(dir == 3){
+                        top_y = y;
+                        down_y = y + height * 2;
+                        left_x = x;
+                        right_x = x + width;
+                        limit = y + height * 3;
+                    }
+
                     for(auto &prop : obj["properties"]){
                         if(prop["name"] == "limit"){
                             limit = prop["value"].get<int>();
-                            break;
+                        }
+                        if(prop["name"] == "downY"){
+                            down_y = prop["value"].get<int>();
+                            //TraceLog(LOG_INFO,"found Down");
+                        }
+                        if(prop["name"] == "topY"){
+                            top_y = prop["value"].get<int>();
+                            //TraceLog(LOG_INFO,"found Top");
+                        }
+                        if(prop["name"] == "rightX"){
+                            right_x = prop["value"].get<int>();
+                        }
+                        if(prop["name"] == "leftX"){
+                            left_x = prop["value"].get<int>();
                         }
                     }
-                    traps.push_back({idx,limit});
+                    traps.push_back({idx,limit,dir,114514,top_y,down_y,left_x,right_x});
                 }
                 idx++;
             }
@@ -96,14 +146,15 @@ void Map::Load(const std::string&path){
     }
 }
 
+/*
 void Map::transRecToSpike(){
  
     for(auto &rec : spikes){
-        
+         
         Spike sp;
         auto [x,y,w,h] = rec;
         sp.bound = { x, y, w, h };
-
+    
         sp.hitbox = {
             x + w * 0.15f,
             y + h * 0.15f,
@@ -113,46 +164,126 @@ void Map::transRecToSpike(){
         Sp.push_back(sp);
     }
 }
-/*
-void Map::transRecToSpikeOne(){    
+*/
+
+Spike Map::transRecToSpikeOne(Rectangle rec,int dir){    
 
         Spike sp;
         auto [x,y,w,h] = rec;
-        sp.bound = { x, y, w, h };
 
+        sp.direction = dir;
+        sp.bound = { x, y, w, h };
+       
+        /*
+        if(dir == 0){
+            sp.hitbox = {
+                x + w * 0.15f,
+                y + h * 0.15f,
+                w * 0.7f,
+                h * 0.85f
+            };
+        }
+        else if(dir == 1){
+            sp.hitbox = {
+
+            }
+        }
+        else if(dir == 2){
+            
+        }
+        else if(dir == 3){
+
+        }
+        */
         sp.hitbox = {
             x + w * 0.15f,
             y + h * 0.15f,
             w * 0.7f,
             h * 0.85f
         };
-       
+
+        return sp;
 }
-*/
+
 void Map::DrawSpike(const Spike&sp){
     const Rectangle &rec = sp.bound;
     
-    Vector2 Top = {
-        rec.x + rec.width/2,
-        rec.y
-    };
+    int dir = sp.direction;
+    Vector2 Top,Left,Right;
+    if(dir == 0){
+        Top = {
+            rec.x + rec.width/2,
+            rec.y
+        };
 
-    Vector2 Left = {
-        rec.x,
-        rec.y + rec.height
-    };
+        Left = {
+            rec.x,
+            rec.y + rec.height
+        };
 
-    Vector2 Right = {
-        rec.x + rec.width,
-        rec.y + rec.height
-    };
+        Right = {
+            rec.x + rec.width,
+            rec.y + rec.height
+        };
+
+    }
+    else if(dir == 1){
+        Top = {
+            rec.x + rec.width,
+            rec.y + rec.height / 2
+        };
+
+        Left = {
+            rec.x,
+            rec.y
+        };
+
+        Right = {
+            rec.x,
+            rec.y + rec.height
+        };
+    }
+    else if(dir == 2){
+        Top = {
+            rec.x,
+            rec.y + rec.height / 2
+        };
+
+        Left = {
+            rec.x + rec.width,
+            rec.y + rec.height
+        };
+
+        Right = {
+            rec.x + rec.width,
+            rec.y
+        };
+
+    }
+    else if(dir == 3){
+        Top = {
+            rec.x + rec.width / 2,
+            rec.y + rec.height
+        };
+
+        Left = {
+            rec.x + rec.width,
+            rec.y
+        };
+
+        Right = {
+            rec.x,
+            rec.y
+        };
+
+    }
 
     DrawTriangle(Left,Right,Top,RED);
 }
 
 void Map::Draw(){
 
-    for(auto &sp : Sp){
+    for(auto &sp : spikes){
         DrawSpike(sp);
     }
     for(int i = 0;i<(int)platforms.size();i++){
@@ -167,11 +298,11 @@ void Map::Draw(){
 
 void Map::Clear(){
     platforms.clear();
-    Sp.clear();
     spikes.clear();
     checkpoints.clear();
     spawn = {0,0};
     traps.clear();     
+    Exit = {};
 }
 
 

@@ -1,6 +1,6 @@
 #include "player.hpp"
 
-Player::Player(Rectangle rec,float G,Color color):REC(rec),RESET(rec),pcolor(color),gravity(G),jumpCount(0){}
+Player::Player(Rectangle rec,float G,Color color):REC(rec),RESET(rec),pcolor(color),gravity(G),jumpCount(0),jumpEvent(false),deathEvent(false){}
 
 void Player::VCollision(float oldTop,float nowTop,float oldBottom,float nowBottom,std::vector<Platform> &plats){
     float x = this->REC.x;
@@ -112,7 +112,8 @@ void Player::UpdateDeadFall(){
 void Player::Die(PlayerState deathType){
     
     if(state != PlayerState::Normal) return;
-    
+     
+    deathEvent = true;
     state = deathType;
     deathTimer = 0.0f;
     if(state == PlayerState::DeadFall){
@@ -158,6 +159,7 @@ void Player::Update(std::vector<Platform> &plats,std::vector<Spike>&Sp,Camera2D 
 
     // Jump !!! 
     if((IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) && jumpCount < 2){
+        jumpEvent = true;
         velocity_y = jumpSpeed; 
         jumpCount++;
         onGround = false;

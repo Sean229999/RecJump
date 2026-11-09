@@ -39,7 +39,9 @@ class Game{
             "assets/maps/level3.tmj",
             "assets/maps/level4.tmj",
         };
-
+    
+        Sound jumpSound;
+        Sound deathSound;
 
     public:
         Game();
@@ -60,9 +62,12 @@ class Game{
 
         void DrawGameWorld();
         void DrawGameScreen();
-        
+        void DrawUi();        
         void triggerTrap();
-
+    
         void resetTrap();
+    
+        void changeLevel();
+
 };
 
