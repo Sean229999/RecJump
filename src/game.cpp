@@ -81,7 +81,7 @@ void Game::Update(){
         ToggleFullscreen();
     }
 
-    changeLevel();
+    //changeLevel();
 
     //player update 
     player.Update(
