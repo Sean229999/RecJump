@@ -210,6 +210,8 @@ void Game::LoadLevel(int level){
     player.RESET.x = maps.spawn.x;
     player.RESET.y = maps.spawn.y;
 
+    //TraceLog(LOG_INFO,"player pos is %d %d",player.REC.x,player.REC.y);
+
     Plat_Land.clear();
     Platform plats(maps.platforms,GRAY);
     Plat_Land.push_back(plats);
@@ -275,8 +277,16 @@ void Game::triggerTrap(){
       
     for(int i = 0;i < (int)maps.traps.size();i++){
         int idx = maps.traps[i].index;
-        float player_center_x = player.REC.x + SIZE/2;
-        float player_center_y = player.REC.y + SIZE/2;
+
+
+        //float player_center_x = player.REC.x + SIZE/2;
+        //float player_center_y = player.REC.y + SIZE;
+
+        float player_right = player.REC.x + SIZE;
+        float player_left = player.REC.x;
+        float player_top = player.REC.y;
+        float player_down = player.REC.y + SIZE;
+
         auto &spike1 = maps.spikes[idx];
         auto &spike2 = Spikess[idx];
 
@@ -295,10 +305,10 @@ void Game::triggerTrap(){
         spd = trap_speed == 114514 ? SPEED * 4.0 : trap_speed;  
 
          
-        if(player_center_x >= left_x &&
-            player_center_x <= right_x && 
-            player_center_y <= down_y &&
-            player_center_y >= top_y
+        if(player_right >= left_x &&
+            player_left <= right_x && 
+            player_top <= down_y &&
+            player_down >= top_y
             ){
             activatedTrap[idx] = true;
         }

@@ -49,36 +49,38 @@ void Map::Load(const std::string&path){
                 //find traps by opacity
                 if(obj["opacity"].get<float>()*100 == 99){  
                     int limit = 0;
-                   
+                  
+                    //these are trigger area 
                     float top_y,down_y,right_x,left_x;
-                    
+                    //speed of traps;
+                    float spd = 114514;
                     if(dir == 0){
                         top_y = y - height * 2;
                         down_y = y + height;
-                        left_x = x + width/2;
+                        left_x = x;
                         right_x = x + width;
-                        limit = y - height * 3;
+                        limit = y - height;
                     }
                     if(dir == 1){
                         top_y = y;
                         down_y = y + height;
                         left_x = x;
                         right_x = x + width * 2;
-                        limit = x + width * 3;
+                        limit = x + width;
                     }
                     if(dir == 2){
                         top_y = y;
                         down_y = y + height;
                         left_x = x - width * 2;
                         right_x = x + width;
-                        limit = x - width * 3;
+                        limit = x - width;
                     }
                     if(dir == 3){
                         top_y = y;
                         down_y = y + height * 2;
                         left_x = x;
                         right_x = x + width;
-                        limit = y + height * 3;
+                        limit = y + height;
                     }
 
                     for(auto &prop : obj["properties"]){
@@ -99,8 +101,11 @@ void Map::Load(const std::string&path){
                         if(prop["name"] == "leftX"){
                             left_x = prop["value"].get<int>();
                         }
+                        if(prop["name"] == "Speed"){
+                            spd = (float)prop["value"].get<int>(); 
+                        }
                     }
-                    traps.push_back({idx,limit,dir,114514,top_y,down_y,left_x,right_x});
+                    traps.push_back({idx,limit,dir,spd,top_y,down_y,left_x,right_x});
                 }
                 idx++;
             }
@@ -131,6 +136,7 @@ void Map::Load(const std::string&path){
             for(auto &obj : layer["objects"]){
                 this->spawn.x = obj["x"].get<float>();
                 this->spawn.y = obj["y"].get<float>();
+                //TraceLog(LOG_INFO,"get spawn pos is %f %f",spawn.x,spawn.y); 
             }
         }
         else if(layer["name"] == "ExitArea"){
@@ -196,10 +202,10 @@ Spike Map::transRecToSpikeOne(Rectangle rec,int dir){
         }
         */
         sp.hitbox = {
-            x + w * 0.15f,
-            y + h * 0.15f,
-            w * 0.7f,
-            h * 0.85f
+            x + w * 0.12f,
+            y + h * 0.12f,
+            w * 0.65f,
+            h * 0.8f
         };
 
         return sp;
@@ -293,14 +299,14 @@ void Map::Draw(){
         if(cp.activated)cp.checkColor = GREEN;
         DrawRectangleRec(cp.area,cp.checkColor);
     }
-    DrawRectangleRec(Exit,RED);
+    DrawRectangleRec(Exit,BLUE);
 }
 
 void Map::Clear(){
     platforms.clear();
     spikes.clear();
     checkpoints.clear();
-    spawn = {0,0};
+    spawn = {};
     traps.clear();     
     Exit = {};
 }
